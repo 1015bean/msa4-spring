@@ -20,8 +20,8 @@ public class RequestMappingController {
         return "GET 테스트";
     }
 
-    @PostMapping("/test")
         // /api/test/로 POST요청 시
+    @PostMapping("/test")
     public String testPost() {
         return "Post 테스트";
     }
