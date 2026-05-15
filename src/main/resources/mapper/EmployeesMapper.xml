@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace: 연결할 맵퍼 인터페이스 패키지 -->
+<mapper namespace="com.msa4spring.mappers.EmployeeMapper">
+    <!-- ResultMap: 특정 Entity객체와 연결 -->
+    <resultMap id="employeesResultMap" type="com.msa4spring.entities.Employee">
+        <id column="emp_id" property="empId" />
+        <result column="name" property="name" />
+        <result column="birth" property="birth" />
+        <result column="gender" property="gender" />
+        <result column="hire_at" property="hireAt" />
+        <result column="fire_at" property="fireAt" />
+        <result column="sup_id" property="supId" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="deleted_at" property="deletedAt" />
+    </resultMap>
+
+    <!-- 1. 데이터 불러오는 처리(select) -->
+    <!-- id= 호출하고 싶은 맵퍼 인터페이스의 메소드명, resultMap= xml파일의 resultMap id -->
+    <select id="getEmployees" resultMap="employeesResultMap">
+        SELECT
+            *
+        FROM employees
+        WHERE
+            deleted_at IS NULL
+        LIMIT 5
+    </select>
+
+    <!-- 2. 데이터 삽입 처리(insert) -->
+    <insert
+            id="store"
+            parameterType="com.msa4spring.entities.Employee"
+            keyProperty="empId"
+            useGeneratedKeys="true"
+    >
+            INSERT INTO employees(
+                name
+                ,birth
+                ,gender
+                ,hire_at
+            ) VALUES (
+                #{name}
+                ,#{birth}
+                ,#{gender}
+                ,now()
+                                 )
+
+    </insert>
+
+    <!-- 2-1. Pk로 데이터 검색해서 불러오기 -->
+    <select id="findByPk" resultMap="employeesResultMap">
+        SELECT
+            *
+        FROM employees
+        WHERE
+                deleted_at IS NULL
+            AND emp_id = #{empId}
+    </select>
+</mapper>

@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class ResponseEntityController {
+
+    // res 메소드의 데이터타입: ResponseEntity<ResponseDTO<String>>
+        // => .code("E99"), .msg("서버 에러 발생") 값을 담은 responseDTO 객체,를 body로 가지는 ResponseEntity를 반환한다
     @GetMapping("/res")
     public ResponseEntity<ResponseDTO<String>> res() {
         // *체이닝 메소드: 클래스.메소드 (메소드처리후 반환된 값).메소드 (메소드처리후 반환된 값).메소드 ,,,
